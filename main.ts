@@ -18,17 +18,12 @@ loops.everyInterval(10000, function () {
 basic.forever(function () {
     if (pins.digitalReadPin(DigitalPin.P0) == 1) {
         if (pins.digitalReadPin(DigitalPin.P1) == 1) {
-            NPersonnes = 1 + NPersonnes
+            NPersonnes = NPersonnes + 1
         }
     }
     if (pins.digitalReadPin(DigitalPin.P1) == 1) {
         if (pins.digitalReadPin(DigitalPin.P0) == 1) {
-            NPersonnes = 1 - NPersonnes
+            NPersonnes = NPersonnes - 1
         }
-    }
-})
-loops.everyInterval(30000, function () {
-    if (0 == 0) {
-    	
     }
 })
