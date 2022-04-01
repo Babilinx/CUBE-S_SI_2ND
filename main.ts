@@ -10,7 +10,13 @@ LCD1IN8.LCD_Display()
 let minute = 34
 let heure = 8
 NPersonnes = convertToText(0)
-loops.everyInterval(1000, function () {
+loops.everyInterval(50000, function () {
+    minute += 1
+    if (minute == 60) {
+        heure += 1
+    }
+})
+loops.everyInterval(60000, function () {
     LCD1IN8.LCD_Clear()
     // Affichage de la temperature
     LCD1IN8.DisString(
@@ -66,10 +72,4 @@ loops.everyInterval(1000, function () {
     LCD1IN8.Get_Color(LCD_COLOR.BLACK)
     )
     LCD1IN8.LCD_Display()
-})
-loops.everyInterval(60000, function () {
-    minute += 1
-    if (minute == 60) {
-        heure += 1
-    }
 })
