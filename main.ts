@@ -7,7 +7,7 @@ radio.onReceivedNumber(function (receivedNumber) {
 })
 radio.onReceivedString(function (receivedString) {
     for (let index = 0; index < 2; index++) {
-        led.toggle(0, 0)
+        led.toggle(4, 0)
         basic.pause(1000)
     }
 })
