@@ -5,12 +5,6 @@ radio.onReceivedNumber(function (receivedNumber) {
         basic.pause(300)
     }
 })
-radio.onReceivedString(function (receivedString) {
-    for (let index = 0; index < 2; index++) {
-        led.toggle(4, 0)
-        basic.pause(1000)
-    }
-})
 let NPersonnes = ""
 radio.setGroup(1)
 LCD1IN8.LCD_Init()
