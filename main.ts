@@ -1,5 +1,9 @@
-radio.onReceivedString(function (receivedString) {
-    NPersonnes = receivedString
+radio.onReceivedNumber(function (receivedNumber) {
+    NPersonnes = convertToText(receivedNumber)
+    for (let index = 0; index < 2; index++) {
+        led.toggle(0, 0)
+        basic.pause(300)
+    }
 })
 let NPersonnes = ""
 radio.setGroup(1)
@@ -16,7 +20,7 @@ loops.everyInterval(50000, function () {
         heure += 1
     }
 })
-loops.everyInterval(60000, function () {
+loops.everyInterval(10000, function () {
     LCD1IN8.LCD_Clear()
     // Affichage de la temperature
     LCD1IN8.DisString(
