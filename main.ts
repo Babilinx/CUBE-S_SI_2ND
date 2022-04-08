@@ -1,32 +1,16 @@
-let Temperature = 0
 let NPersonnes = 0
-// indicateur de fonctionnement
-loops.everyInterval(10000, function () {
-    for (let index = 0; index < 2; index++) {
-        led.toggle(0, 0)
-        basic.pause(100)
-    }
+radio.setGroup(1)
+radio.setTransmitPower(7)
+loops.everyInterval(1000, function () {
+    radio.sendString("yo")
 })
-// température
-// 
-loops.everyInterval(10000, function () {
-    Temperature = input.temperature()
-    if (Temperature > 21) {
-        led.plot(3, 3)
-    } else {
-        led.unplot(3, 3)
+loops.everyInterval(200, function () {
+    if (input.buttonIsPressed(Button.A)) {
+        NPersonnes += 1
+        radio.sendNumber(NPersonnes)
     }
-})
-// compte-personne
-basic.forever(function () {
-    if (pins.digitalReadPin(DigitalPin.P0) == 1) {
-        if (pins.digitalReadPin(DigitalPin.P1) == 1) {
-            NPersonnes = NPersonnes + 1
-        }
-    }
-    if (pins.digitalReadPin(DigitalPin.P1) == 1) {
-        if (pins.digitalReadPin(DigitalPin.P0) == 1) {
-            NPersonnes = NPersonnes - 1
-        }
+    if (input.buttonIsPressed(Button.B)) {
+        NPersonnes += -1
+        radio.sendNumber(NPersonnes)
     }
 })
