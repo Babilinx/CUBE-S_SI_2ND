@@ -5,7 +5,8 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "microphone": "*"
+        "microphone": "*",
+        "LCD1in8": "github:waveshare/WSLCD1in8#84dc2f2c6fc3925dd3419110ac2af0afc1219c8e"
     },
     "files": [
         "README.md",

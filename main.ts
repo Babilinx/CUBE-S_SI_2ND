@@ -1,32 +1,79 @@
-let Temperature = 0
-let NPersonnes = 0
-// indicateur de fonctionnement
-loops.everyInterval(10000, function () {
+radio.onReceivedNumber(function (receivedNumber) {
+    NPersonnes = receivedNumber
     for (let index = 0; index < 2; index++) {
         led.toggle(0, 0)
-        basic.pause(100)
+        basic.pause(300)
     }
 })
-// température
-// 
+let NPersonnes = 0
+radio.setGroup(1)
+LCD1IN8.LCD_Init()
+LCD1IN8.LCD_Clear()
+LCD1IN8.LCD_SetBL(10)
+LCD1IN8.LCD_Display()
+let minute = 34
+let heure = 8
+NPersonnes = convertToText(0)
+loops.everyInterval(50000, function () {
+    minute += 1
+    if (minute == 60) {
+        heure += 1
+    }
+})
 loops.everyInterval(10000, function () {
-    Temperature = input.temperature()
-    if (Temperature > 21) {
-        led.plot(3, 3)
-    } else {
-        led.unplot(3, 3)
+    LCD1IN8.LCD_Clear()
+    // Affichage de la temperature
+    LCD1IN8.DisString(
+    10,
+    55,
+    "" + convertToText(input.temperature()) + " C",
+    LCD1IN8.Get_Color(LCD_COLOR.BLACK)
+    )
+    if (input.temperature() < 19) {
+        LCD1IN8.DrawPoint(
+        45,
+        62,
+        LCD1IN8.Get_Color(LCD_COLOR.RED),
+        DOT_PIXEL.DOT_PIXEL_4
+        )
     }
-})
-// compte-personne
-basic.forever(function () {
-    if (pins.digitalReadPin(DigitalPin.P0) == 1) {
-        if (pins.digitalReadPin(DigitalPin.P1) == 1) {
-            NPersonnes = NPersonnes + 1
-        }
+    // Nombre de personnes dans la salle
+    LCD1IN8.DisString(
+    63,
+    15,
+    "" + convertToText(NPersonnes) + " Personnes",
+    LCD1IN8.Get_Color(LCD_COLOR.BLACK)
+    )
+    // Affichage de la temperature
+    LCD1IN8.DisString(
+    63,
+    101,
+    "" + convertToText(input.lightLevel()) + "Lux",
+    LCD1IN8.Get_Color(LCD_COLOR.BLACK)
+    )
+    LCD1IN8.DrawRectangle(
+    108,
+    104,
+    113,
+    109,
+    LCD1IN8.Get_Color(LCD_COLOR.BLACK),
+    DRAW_FILL.DRAW_EMPTY,
+    DOT_PIXEL.DOT_PIXEL_1
+    )
+    if (input.lightLevel() > 200 && NPersonnes > 0) {
+        LCD1IN8.DrawPoint(
+        112,
+        108,
+        LCD1IN8.Get_Color(LCD_COLOR.YELLOW),
+        DOT_PIXEL.DOT_PIXEL_4
+        )
     }
-    if (pins.digitalReadPin(DigitalPin.P1) == 1) {
-        if (pins.digitalReadPin(DigitalPin.P0) == 1) {
-            NPersonnes = NPersonnes - 1
-        }
-    }
+    // Affichage de la temperature
+    LCD1IN8.DisString(
+    63,
+    61,
+    "" + convertToText(heure) + ":" + convertToText(minute),
+    LCD1IN8.Get_Color(LCD_COLOR.BLACK)
+    )
+    LCD1IN8.LCD_Display()
 })
