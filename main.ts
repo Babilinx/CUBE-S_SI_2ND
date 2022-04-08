@@ -1,11 +1,11 @@
 radio.onReceivedNumber(function (receivedNumber) {
-    NPersonnes = convertToText(receivedNumber)
+    NPersonnes = receivedNumber
     for (let index = 0; index < 2; index++) {
         led.toggle(0, 0)
         basic.pause(300)
     }
 })
-let NPersonnes = ""
+let NPersonnes = 0
 radio.setGroup(1)
 LCD1IN8.LCD_Init()
 LCD1IN8.LCD_Clear()
@@ -60,7 +60,7 @@ loops.everyInterval(10000, function () {
     DRAW_FILL.DRAW_EMPTY,
     DOT_PIXEL.DOT_PIXEL_1
     )
-    if (input.lightLevel() > 200) {
+    if (input.lightLevel() > 200 && NPersonnes > 0) {
         LCD1IN8.DrawPoint(
         112,
         108,
